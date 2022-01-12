@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed;
 
+    public CharacterController charCon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +18,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x + (Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime), 
-                                         transform.position.y, 
-                                         transform.position.z + (Input.GetAxisRaw("Vertical") * moveSpeed * Time.deltaTime));
+        //transform.position = new Vector3(transform.position.x + (Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime), 
+        //                                 transform.position.y, 
+        //                                 transform.position.z + (Input.GetAxisRaw("Vertical") * moveSpeed * Time.deltaTime));
+        charCon.Move(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0f, Input.GetAxisRaw("Vertical") * moveSpeed) * Time.deltaTime);
     }
 }
