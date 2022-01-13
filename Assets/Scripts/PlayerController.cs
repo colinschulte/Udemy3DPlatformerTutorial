@@ -18,19 +18,29 @@ public class PlayerController : MonoBehaviour
     {
         cam = FindObjectOfType<CameraController>();
     }
+    private void FixedUpdate()
+    {
+        if (!charCon.isGrounded)
+        {
+            moveAmount.y += (Physics.gravity.y * Time.fixedDeltaTime);
+        }
+        else
+        {
+            moveAmount.y = Physics.gravity.y * Time.fixedDeltaTime;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        //transform.position = new Vector3(transform.position.x + (Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime), 
-        //                                 transform.position.y, 
-        //                                 transform.position.z + (Input.GetAxisRaw("Vertical") * moveSpeed * Time.deltaTime));
+        float yStore = moveAmount.y;
+
         moveAmount = (cam.transform.forward * Input.GetAxisRaw("Vertical")) + (cam.transform.right * Input.GetAxisRaw("Horizontal"));
 
-        moveAmount.y = 0f;
-
         moveAmount = moveAmount.normalized;
+        
+        moveAmount.y = yStore;
 
-        charCon.Move(moveAmount * moveSpeed * Time.deltaTime);
+        charCon.Move(new Vector3(moveAmount.x * moveSpeed, moveAmount.y, moveAmount.z * moveSpeed) * Time.deltaTime);
     }
 }
