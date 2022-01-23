@@ -696,6 +696,7 @@ MonoBehaviour:
   jumpForce: 17
   gravityScale: 5
   charCon: {fileID: 1184159796}
+  rotateSpeed: 20
 --- !u!4 &1184159794
 Transform:
   m_ObjectHideFlags: 0
