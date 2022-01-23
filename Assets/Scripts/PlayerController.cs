@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    public float moveSpeed;
+    public float moveSpeed, jumpForce, gravityScale;
+    private float yStore;
 
     public CharacterController charCon;
 
@@ -22,24 +23,31 @@ public class PlayerController : MonoBehaviour
     {
         if (!charCon.isGrounded)
         {
-            moveAmount.y += (Physics.gravity.y * Time.fixedDeltaTime);
+            moveAmount.y += (Physics.gravity.y * gravityScale * Time.fixedDeltaTime);
         }
         else
         {
-            moveAmount.y = Physics.gravity.y * Time.fixedDeltaTime;
+            moveAmount.y = Physics.gravity.y * gravityScale * Time.fixedDeltaTime;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        float yStore = moveAmount.y;
+        yStore = moveAmount.y;
 
         moveAmount = (cam.transform.forward * Input.GetAxisRaw("Vertical")) + (cam.transform.right * Input.GetAxisRaw("Horizontal"));
 
         moveAmount = moveAmount.normalized;
         
         moveAmount.y = yStore;
+
+        if (charCon.isGrounded)
+        {
+            if (Input.GetButtonDown("Jump")){
+                moveAmount.y = jumpForce;
+            }
+        }
 
         charCon.Move(new Vector3(moveAmount.x * moveSpeed, moveAmount.y, moveAmount.z * moveSpeed) * Time.deltaTime);
     }

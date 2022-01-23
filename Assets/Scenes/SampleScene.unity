@@ -693,6 +693,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8
+  jumpForce: 17
+  gravityScale: 5
   charCon: {fileID: 1184159796}
 --- !u!4 &1184159794
 Transform:
